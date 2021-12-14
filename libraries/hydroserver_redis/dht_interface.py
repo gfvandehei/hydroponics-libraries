@@ -6,7 +6,10 @@ def dht_redis_dict_to_json(redis_dict: Dict[bytes, Any]):
     new_dict = {}
     for key in redis_dict:
         str_key = key.decode("utf-8")
-        new_dict[str_key] = float(redis_dict[key].decode("utf-8"))
+        if str_key == "timestamp":
+            new_dict[str_key] = redis_dict[key].decode("utf-8")
+        else:
+            new_dict[str_key] = float(redis_dict[key].decode("utf-8"))
     return new_dict
 
 class HydroDHTRedisInterface(object):
